@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Formulario de Contacto",
   description: "Formulario de contacto sencillo",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

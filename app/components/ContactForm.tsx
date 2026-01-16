@@ -145,12 +145,12 @@ export default function ContactForm() {
               >
                 Teléfono celular
               </label>
-              <div className="flex gap-2">
+              <div className="flex gap-2 w-full">
                 <select
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleChange}
-                  className="h-[50px] px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
+                  className="h-[50px] w-40 flex-shrink-0 px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all text-sm"
                 >
                   {countryCodes.map((country) => (
                     <option key={country.code} value={country.code}>
@@ -166,7 +166,7 @@ export default function ContactForm() {
                   onChange={handleChange}
                   required
                   pattern="[0-9]{10,14}"
-                  className="flex-1 h-[50px] px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
+                  className="flex-1 min-w-0 h-[50px] px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
                   placeholder="1234567890"
                 />
               </div>

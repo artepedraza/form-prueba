@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
 
 interface ContactFormData {
   name: string;
@@ -55,16 +56,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Aquí es donde procesarías los datos del formulario
-    // Por ejemplo: guardar en base de datos, enviar email, etc.
+    // Guardar en Supabase
+    const { data, error } = await supabase
+      .from('contacts')
+      .insert([
+        {
+          name: body.name,
+          email: body.email,
+          phone: body.phone,
+          country_code: body.countryCode,
+        },
+      ])
+      .select();
 
-    // Por ahora, solo registramos en consola
-    console.log('Nuevo contacto recibido:', {
-      name: body.name,
-      email: body.email,
-      phone: `${body.countryCode}${body.phone}`,
-      timestamp: new Date().toISOString(),
-    });
+    if (error) {
+      console.error('Error al guardar en Supabase:', error);
+      return NextResponse.json(
+        { error: 'Error al guardar los datos. Por favor, intenta de nuevo.' },
+        { status: 500 }
+      );
+    }
+
+    console.log('Contacto guardado exitosamente en Supabase:', data);
 
     // Respuesta exitosa
     return NextResponse.json(

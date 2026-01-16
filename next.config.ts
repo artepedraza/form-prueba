@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  // Force Vercel redeploy - updated 2026-01-16
+  // Vercel auto-detection enabled
 };
 
 export default nextConfig;

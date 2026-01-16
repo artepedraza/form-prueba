@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 interface ContactFormData {
   name: string;
@@ -56,28 +56,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Guardar en Supabase
-    const { data, error } = await supabase
-      .from('contacts')
-      .insert([
-        {
-          name: body.name,
-          email: body.email,
-          phone: body.phone,
-          country_code: body.countryCode,
-        },
-      ])
-      .select();
+    // Guardar en Supabase si está configurado
+    if (isSupabaseConfigured() && supabase) {
+      const { data, error } = await supabase
+        .from('contacts')
+        .insert([
+          {
+            name: body.name,
+            email: body.email,
+            phone: body.phone,
+            country_code: body.countryCode,
+          },
+        ])
+        .select();
 
-    if (error) {
-      console.error('Error al guardar en Supabase:', error);
-      return NextResponse.json(
-        { error: 'Error al guardar los datos. Por favor, intenta de nuevo.' },
-        { status: 500 }
-      );
+      if (error) {
+        console.error('Error al guardar en Supabase:', error);
+        return NextResponse.json(
+          { error: 'Error al guardar los datos. Por favor, intenta de nuevo.' },
+          { status: 500 }
+        );
+      }
+
+      console.log('Contacto guardado exitosamente en Supabase:', data);
+    } else {
+      // Si Supabase no está configurado, solo registra en consola
+      console.log('Supabase no configurado. Contacto recibido (no guardado):', {
+        name: body.name,
+        email: body.email,
+        phone: `${body.countryCode}${body.phone}`,
+        timestamp: new Date().toISOString(),
+      });
     }
-
-    console.log('Contacto guardado exitosamente en Supabase:', data);
 
     // Respuesta exitosa
     return NextResponse.json(

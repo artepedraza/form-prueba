@@ -145,12 +145,12 @@ export default function ContactForm() {
               >
                 Teléfono celular
               </label>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-stretch">
                 <select
                   name="countryCode"
                   value={formData.countryCode}
                   onChange={handleChange}
-                  className="px-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
+                  className="px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-all"
                 >
                   {countryCodes.map((country) => (
                     <option key={country.code} value={country.code}>
